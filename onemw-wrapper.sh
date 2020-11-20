@@ -23,8 +23,6 @@
 
 CWD=$PWD
 
-DIRECTORY=$(cd `dirname $0` && pwd)
-
 if [ $# -lt 1 ]; then
     set +x
     echo ""
@@ -36,6 +34,21 @@ if [ $# -lt 1 ]; then
     exit 1
 fi
 
+
+function follow_links() (
+  cd -P "$(dirname -- "$1")"
+  file="$PWD/$(basename -- "$1")"
+  while [[ -h "$file" ]]; do
+    cd -P "$(dirname -- "$file")"
+    file="$(readlink -- "$file")"
+    cd -P "$(dirname -- "$file")"
+    file="$PWD/$(basename -- "$file")"
+  done
+  echo "$file"
+)
+
+PROG_NAME="$(follow_links "${BASH_SOURCE[0]}")"
+DIRECTORY="$(cd "${PROG_NAME%/*}" ; pwd -P)"
 DOCKER_CMD=$(which podman || which docker)
 
 config_file="${DW_CONFIG_PATH:-${HOME}/.config/docker-wrapper.sh/dw-config.conf}"
