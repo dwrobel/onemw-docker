@@ -49,7 +49,7 @@ if [ -f /etc/profile.d/ccache.sh ] ; then
     if [ -w "$CACHE_DIR" ] && [ -d "$CACHE_DIR" ] ; then
         export CCACHE_DIR=$CACHE_DIR/ccache
         sudo -u "$USER" mkdir -p $CCACHE_DIR
-        sudo -u "$USER" --preserve-env=CCACHE_DIR ccache --set-config=max_size=2G
+        sudo -u "$USER" --preserve-env=CCACHE_DIR ccache --set-config=max_size=5G
         preserved_envs="$preserved_envs,CCACHE_DIR"
     fi
 
@@ -64,3 +64,4 @@ if [ -d /usr/lib/ccache ]; then
 fi
 
 sudo -H -u "$USER" --preserve-env=$preserved_envs "$@"
+

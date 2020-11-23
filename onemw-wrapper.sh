@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-# Wraps commands with docker
+# Wraps commands with docker/podman
 #
 # Usage: docker-wrapper.sh <command-to-execute-within-container>
 #
