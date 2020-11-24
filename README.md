@@ -10,6 +10,6 @@
 ## Usage
 
 ```
-  $ onemw-docker/onemw-wrapper.sh bash
-  $ onemw-docker/onemw-wrapper.sh <command-to-execute-within-container>
+  $ onemw-wrapper.sh bash
+  $ onemw-wrapper.sh <command-to-execute-within-container>
 ```
