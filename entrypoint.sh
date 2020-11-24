@@ -23,7 +23,7 @@ elif getent group sudo; then
     extra_group="-G sudo"
 fi
 
-useradd --no-create-home ${extra_group} --uid $UID --gid $GID "$USER" || test $? = 9
+useradd --non-unique --no-create-home ${extra_group} --uid $UID --gid $GID "$USER" || test $? = 9
 
 gid=$(stat -c "%g" /dev/dri/card0 2>/dev/null || echo "")
 
