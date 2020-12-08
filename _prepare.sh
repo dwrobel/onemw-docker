@@ -17,8 +17,8 @@
 
 if [ ! -d onemw-harriot ]; then
     git clone ssh://gerrit.onemw.net:29418/onemw-harriot
-    (cd onemw-harriot && git fetch "ssh://gerrit.onemw.net:29418/onemw-harriot" refs/changes/07/70407/1 && git cherry-pick FETCH_HEAD)
-    make -C onemw-harriot/dockerfiles/onemw-mars-18.04 onemw-encrypt-image_1.1-0_amd64.deb
+    (cd onemw-harriot && git fetch "ssh://dwrobel@gerrit.onemw.net:29418/onemw-harriot" refs/changes/07/70407/5 && git cherry-pick FETCH_HEAD)
+    make -C onemw-harriot/dockerfiles/onemw-mars-18.04 prepare
 fi
 
 (cd onemw-harriot/dockerfiles/onemw-mars-18.04 && sudo $(which podman || which docker) build -t dwrobel/onemw-ubuntu-1804 .)
