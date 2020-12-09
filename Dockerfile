@@ -7,7 +7,7 @@ RUN apt-get update \
 
 RUN echo >/etc/sudoers.d/sudo-no-passwd '%sudo  ALL=(ALL)       NOPASSWD: ALL'
 
-ADD onemw-gerrit.sh /usr/local/bin/
+ADD utils/onemw-gerrit.sh /usr/local/bin/
 
 ADD entrypoint.sh /
 

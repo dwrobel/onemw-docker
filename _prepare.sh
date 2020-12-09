@@ -17,9 +17,15 @@
 
 if [ ! -d onemw-harriot ]; then
     git clone ssh://gerrit.onemw.net:29418/onemw-harriot
-    (cd onemw-harriot && git fetch "ssh://dwrobel@gerrit.onemw.net:29418/onemw-harriot" refs/changes/07/70407/5 && git cherry-pick FETCH_HEAD)
     make -C onemw-harriot/dockerfiles/onemw-mars-18.04 prepare
 fi
 
-(cd onemw-harriot/dockerfiles/onemw-mars-18.04 && sudo $(which podman || which docker) build -t dwrobel/onemw-ubuntu-1804 .)
-sudo $(which podman || which docker) build -t dwrobel/onemw-ubuntu-1804 .
+OCI_BUILDER=$(which podman 2>/dev/null || which docker 2>/dev/null)
+
+if [ "x${OCI_BUILDER}" = "x" ]; then
+    echo "ERROR: Could not find neither podman nor docker."
+    exit 1
+fi
+
+(cd onemw-harriot/dockerfiles/onemw-mars-18.04 && sudo ${OCI_BUILDER} build -t dwrobel/onemw-ubuntu-1804 .)
+sudo ${OCI_BUILDER} build -t dwrobel/onemw-ubuntu-1804 .

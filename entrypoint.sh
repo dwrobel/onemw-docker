@@ -63,5 +63,7 @@ if [ -d /usr/lib/ccache ]; then
   export PATH=/usr/lib/ccache:$PATH
 fi
 
+echo "onemw docker/podman wrapper by Damian Wrobel <dwrobel@ertelnet.rybnik.pl>"
+
 sudo -H -u "$USER" --preserve-env=$preserved_envs "$@"
 
