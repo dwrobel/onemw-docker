@@ -17,8 +17,9 @@
 
 if [ ! -d onemw-harriot ]; then
     git clone ssh://gerrit.onemw.net:29418/onemw-harriot
-    make -C onemw-harriot/dockerfiles/onemw-mars-18.04 prepare
 fi
+
+make -C onemw-harriot/dockerfiles/onemw-mars-18.04 prepare
 
 OCI_BUILDER=$(which podman 2>/dev/null || which docker 2>/dev/null)
 
