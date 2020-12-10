@@ -2,7 +2,7 @@
 ## Installation
 
 ```
-  $ git clone git@github.com:dwrobel/onemw-docker.git
+  $ git clone https://github.com/dwrobel/onemw-docker.git
   $ cd onemw-docker
   $ ./_prepare.sh
 ```
