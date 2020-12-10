@@ -2,6 +2,8 @@ FROM dwrobel/onemw-ubuntu-1804
 
 USER root:root
 
+RUN userdel onemw-builder
+
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y sudo ccache mc strace
 
