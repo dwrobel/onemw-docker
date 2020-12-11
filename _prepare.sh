@@ -28,5 +28,8 @@ if [ "x${OCI_BUILDER}" = "x" ]; then
     exit 1
 fi
 
+sudo ${OCI_BUILDER} localhost/dwrobel/onemw-ubuntu-1804 || true
+sudo ${OCI_BUILDER} localhost/dwrobel/onemw-ubuntu-1804-wrapper || true
+
 (cd onemw-harriot/dockerfiles/onemw-mars-18.04 && sudo ${OCI_BUILDER} build -t dwrobel/onemw-ubuntu-1804 .)
-sudo ${OCI_BUILDER} build -t dwrobel/onemw-ubuntu-1804 .
+sudo ${OCI_BUILDER} build -t dwrobel/onemw-ubuntu-1804-wrapper .
