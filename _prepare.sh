@@ -19,7 +19,8 @@ if [ ! -d onemw-harriot ]; then
     git clone ssh://gerrit.onemw.net:29418/onemw-harriot
 fi
 
-make -C onemw-harriot/dockerfiles/onemw-mars-18.04 prepare
+(cd onemw-harriot/dockerfiles/onemw-mars-u18.04 && rm -rf common; cp -a ../common .)
+make -C onemw-harriot/dockerfiles/onemw-mars-u18.04 prepare
 
 OCI_BUILDER=$(which podman 2>/dev/null || which docker 2>/dev/null)
 
@@ -31,5 +32,5 @@ fi
 sudo ${OCI_BUILDER} image rm -f localhost/dwrobel/onemw-ubuntu-1804 || true
 sudo ${OCI_BUILDER} image rm -f localhost/dwrobel/onemw-ubuntu-1804-wrapper || true
 
-(cd onemw-harriot/dockerfiles/onemw-mars-18.04 && sudo ${OCI_BUILDER} build -t dwrobel/onemw-ubuntu-1804 .)
+(cd onemw-harriot/dockerfiles/onemw-mars-u18.04 && sudo ${OCI_BUILDER} build -t dwrobel/onemw-ubuntu-1804 .)
 sudo ${OCI_BUILDER} build -t dwrobel/onemw-ubuntu-1804-wrapper .

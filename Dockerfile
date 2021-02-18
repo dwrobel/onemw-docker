@@ -18,10 +18,14 @@ FROM dwrobel/onemw-ubuntu-1804
 
 USER root:root
 
-RUN userdel onemw-builder
+# This is to avoid the following error:
+#  chfn: PAM: System error
+#  adduser: `/usr/bin/chfn -f systemd Resolver systemd-resolve' returned error code 1. Exiting.
+RUN ln -s -f /bin/true /usr/bin/chfn
 
+# Add extra tools
 RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y sudo ccache mc strace
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y ccache mc strace
 
 RUN echo >/etc/sudoers.d/sudo-no-passwd '%sudo  ALL=(ALL)       NOPASSWD: ALL'
 
