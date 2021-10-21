@@ -20,7 +20,7 @@ if [ ! -d onemw-harriot ]; then
 fi
 
 (cd onemw-harriot/dockerfiles/onemw-mars-u18.04 && rm -rf common; cp -a ../common .)
-make -C onemw-harriot/dockerfiles/onemw-mars-u18.04 prepare
+make -C onemw-harriot/dockerfiles/onemw-mars-u18.04 dependencies
 
 OCI_BUILDER=$(which podman 2>/dev/null || which docker 2>/dev/null)
 
