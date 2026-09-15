@@ -1,5 +1,5 @@
 #
-# Copyright 2018-2020 Damian Wrobel <dwrobel@ertelnet.rybnik.pl>
+# Copyright 2018 Damian Wrobel <dwrobel@ertelnet.rybnik.pl>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,23 +14,24 @@
 # limitations under the License.
 #
 
-FROM dwrobel/onemw-ubuntu-1804
+FROM quay.io/centos/centos:stream9
+#https://hub.docker.com/r/almalinux/9-base
+#FROM quay.io/almalinuxorg/9-base
 
-USER root:root
+RUN dnf install -y sudo https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 
-# This is to avoid the following error:
-#  chfn: PAM: System error
-#  adduser: `/usr/bin/chfn -f systemd Resolver systemd-resolve' returned error code 1. Exiting.
-RUN ln -s -f /bin/true /usr/bin/chfn
+RUN dnf install -y sudo
+RUN echo >/etc/sudoers.d/wheel-no-passwd '%wheel	ALL=(ALL)	NOPASSWD: ALL'
 
-# Add extra tools
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y ccache mc strace
+RUN dnf install -y dnf-plugins-core rpm-build
+RUN dnf config-manager --set-enabled crb
+RUN dnf copr enable -y dwrobel/tar centos-stream-9
+RUN dnf copr enable -y dwrobel/repo centos-stream-9
+RUN dnf update -y
 
-RUN echo >/etc/sudoers.d/sudo-no-passwd '%sudo  ALL=(ALL)       NOPASSWD: ALL'
+RUN dnf install -y bzip2 ccache chrpath cpio cpp diffstat diffutils file findutils gawk gcc gcc-c++ git glibc-devel glibc-langpack-en gzip hostname libacl lz4 make patch perl perl-Data-Dumper perl-File-Compare perl-File-Copy perl-FindBin perl-Text-ParseWords perl-Thread-Queue perl-bignum perl-locale python python3 python3-GitPython python3-jinja2 python3-pexpect python3-pip rpcgen socat tar texinfo unzip wget which xz zstd
+RUN dnf install -y git which strace diffutils quilt mc repo
 
-ADD utils/onemw-gerrit.sh /usr/local/bin/
+#RUN curl -sL https://download.copr.fedorainfracloud.org/results/dwrobel/tar/epel-7-x86_64/01752524-tar/tar-1.32-6.el7.x86_64.rpm | rpm2archive | tar -C / -zxvf - ./usr/bin/tar
 
 ADD entrypoint.sh /
-
-ENTRYPOINT ["/entrypoint.sh"]

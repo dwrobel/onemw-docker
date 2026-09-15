@@ -61,7 +61,7 @@ if [ -e "${config_file}" ]; then
 fi
 
 if [ -z "${DOCKER_IMG}" ]; then
-    DOCKER_IMG=dwrobel/onemw-ubuntu-1804-wrapper
+    DOCKER_IMG=dwrobel/docker-wrapper-c
     sudo ${DOCKER_CMD} build --network=host "${DOCKER_BUILD[@]}" -t ${DOCKER_IMG} $DIRECTORY
 fi
 
@@ -93,4 +93,4 @@ fi
 
 test -t 1 && USE_TTY="-t"
 
-sudo ${DOCKER_CMD} run --network=host "${DOCKER_RUN[@]}" --entrypoint=/entrypoint.sh --privileged -p 3389:3389 -v /dev/dri:/dev/dri -i ${USE_TTY} ${cache_dir} ${cc_opts} ${cxx_opts} ${wayland_display_opts} -e USER=$USER -e UID=$UID -e GID=$(id -g $USER) -e CWD="$CWD" ${display_opts} ${xdg_runtime_opts} -v /tmp/.X11-unix:/tmp/.X11-unix -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v "${VDIR}":"${VDIR}" ${DOCKER_IMG} "$@"
+sudo ${DOCKER_CMD} run --network=host "${DOCKER_RUN[@]}" --entrypoint=/entrypoint.sh --privileged -p 3389:3389 -v /dev/dri:/dev/dri -i ${USE_TTY} ${cache_dir} ${cc_opts} ${cxx_opts} ${wayland_display_opts} -e USER=$USER -e UID=$UID -e GID=$(id -g $USER) -e CWD="$CWD" ${display_opts} ${xdg_runtime_opts} -v /tmp/.X11-unix:/tmp/.X11-unix -v ${VDIR}/.Xauthority:${VDIR}/.Xauthority -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v "${VDIR}":"${VDIR}" ${DOCKER_IMG} "$@"

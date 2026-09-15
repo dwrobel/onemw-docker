@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 #
-# Copyright (C) 2018-2019 Damian Wrobel <dwrobel@ertelnet.rybnik.pl>
+# Copyright 2018 Damian Wrobel <dwrobel@ertelnet.rybnik.pl>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 
+echo "group membership: ${IDS}"
 groupadd --non-unique --gid $GID "$USER" || test $? = 9
 
 if getent group wheel; then
@@ -31,6 +32,10 @@ if [ x${gid} != "x" ]; then
     groupadd --non-unique --gid $gid _video || true
     usermod -a -G $gid $USER || true
 fi
+
+for g in ${IDS}; do
+    usermod -a -G ${g} $USER || true
+done
 
 if [ -z ${XDG_RUNTIME_DIR} ]; then
     XDG_RUNTIME_DIR=/run/user/$UID
@@ -63,7 +68,7 @@ if [ -d /usr/lib/ccache ]; then
   export PATH=/usr/lib/ccache:$PATH
 fi
 
-echo "onemw docker/podman wrapper by Damian Wrobel <dwrobel@ertelnet.rybnik.pl>"
+echo "podman/docker wrapper by Damian Wrobel <dwrobel@ertelnet.rybnik.pl>"
 
 sudo -H -u "$USER" --preserve-env=$preserved_envs "$@"
 
