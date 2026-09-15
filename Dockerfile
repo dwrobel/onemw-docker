@@ -15,8 +15,6 @@
 #
 
 FROM quay.io/centos/centos:stream9
-#https://hub.docker.com/r/almalinux/9-base
-#FROM quay.io/almalinuxorg/9-base
 
 RUN dnf install -y sudo https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 
@@ -31,7 +29,5 @@ RUN dnf update -y
 
 RUN dnf install -y bzip2 ccache chrpath cpio cpp diffstat diffutils file findutils gawk gcc gcc-c++ git glibc-devel glibc-langpack-en gzip hostname libacl lz4 make patch perl perl-Data-Dumper perl-File-Compare perl-File-Copy perl-FindBin perl-Text-ParseWords perl-Thread-Queue perl-bignum perl-locale python python3 python3-GitPython python3-jinja2 python3-pexpect python3-pip rpcgen socat tar texinfo unzip wget which xz zstd
 RUN dnf install -y git which strace diffutils quilt mc repo
-
-#RUN curl -sL https://download.copr.fedorainfracloud.org/results/dwrobel/tar/epel-7-x86_64/01752524-tar/tar-1.32-6.el7.x86_64.rpm | rpm2archive | tar -C / -zxvf - ./usr/bin/tar
 
 ADD entrypoint.sh /
