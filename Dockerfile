@@ -28,6 +28,6 @@ RUN dnf copr enable -y dwrobel/repo centos-stream-9
 RUN dnf update -y
 
 RUN dnf install -y bzip2 ccache chrpath cpio cpp diffstat diffutils file findutils gawk gcc gcc-c++ git glibc-devel glibc-langpack-en gzip hostname libacl lz4 make patch perl perl-Data-Dumper perl-File-Compare perl-File-Copy perl-FindBin perl-Text-ParseWords perl-Thread-Queue perl-bignum perl-locale python python3 python3-GitPython python3-jinja2 python3-pexpect python3-pip rpcgen socat tar texinfo unzip wget which xz zstd
-RUN dnf install -y git which strace diffutils quilt mc repo glibc.i686 e2fsprogs chrpath lz4 rpcgen
+RUN dnf install -y git which strace diffutils quilt mc repo glibc.i686 e2fsprogs chrpath lz4 rpcgen proxychains-ng
 
 ADD entrypoint.sh /
